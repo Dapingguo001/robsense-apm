@@ -54,9 +54,17 @@ struct UBLOX_detect_state {
 };
 
 struct ERB_detect_state {
-    uint8_t payload_length, payload_counter;
+    uint16_t payload_length, payload_counter;
     uint8_t step;
     uint8_t ck_a, ck_b;
+};
+
+struct RST_RTK_detect_state {
+    uint8_t payload_length = 134;
+    uint8_t payload_counter;
+    uint8_t step;
+    uint16_t XOR_check;
+    uint16_t Checksum;
 };
 
 struct SBP_detect_state {

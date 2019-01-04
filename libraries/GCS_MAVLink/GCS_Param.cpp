@@ -84,13 +84,18 @@ GCS_MAVLINK::queued_param_send()
         char param_name[AP_MAX_NAME_SIZE];
         vp->copy_name_token(_queued_parameter_token, param_name, sizeof(param_name), true);
 
-        mavlink_msg_param_value_send(
-            chan,
-            param_name,
-            value,
-            mav_var_type(_queued_parameter_type),
-            _queued_parameter_count,
-            _queued_parameter_index);
+        if(chan == 2)
+                continue;
+        else
+        {
+            mavlink_msg_param_value_send(
+                chan,
+                param_name,
+                value,
+                mav_var_type(_queued_parameter_type),
+                _queued_parameter_count,
+                _queued_parameter_index);
+        }
 
         _queued_parameter = AP_Param::next_scalar(&_queued_parameter_token, &_queued_parameter_type);
         _queued_parameter_index++;

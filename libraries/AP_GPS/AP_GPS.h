@@ -90,7 +90,8 @@ public:
         GPS_TYPE_GSOF  = 11,
         GPS_TYPE_ERB = 13,
         GPS_TYPE_MAV = 14,
-        GPS_TYPE_NOVA = 15
+        GPS_TYPE_NOVA = 15,
+        GPS_TYPE_RST_RTK = 16,
     };
 
     /// GPS status codes
@@ -496,6 +497,7 @@ private:
         struct SBP_detect_state sbp_detect_state;
         struct SBP2_detect_state sbp2_detect_state;
         struct ERB_detect_state erb_detect_state;
+        struct RST_RTK_detect_state rst_rtk_detect_state;
     } detect_state[GPS_MAX_RECEIVERS];
 
     struct {

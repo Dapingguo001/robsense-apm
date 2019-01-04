@@ -249,7 +249,7 @@
 #endif
 
 #ifndef HAL_GPS_TYPE_DEFAULT
-#define HAL_GPS_TYPE_DEFAULT 1
+#define HAL_GPS_TYPE_DEFAULT 16
 #endif
 
 #ifndef HAL_CAN_DRIVER_DEFAULT

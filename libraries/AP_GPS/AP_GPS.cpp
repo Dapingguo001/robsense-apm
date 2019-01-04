@@ -35,6 +35,7 @@
 #include "AP_GPS_UBLOX.h"
 #include "AP_GPS_MAV.h"
 #include "GPS_Backend.h"
+#include "AP_GPS_RST_RTK.h"
 
 #if HAL_WITH_UAVCAN
 #include <AP_BoardConfig/AP_BoardConfig_CAN.h>
@@ -67,7 +68,7 @@ const AP_Param::GroupInfo AP_GPS::var_info[] = {
     // @Param: TYPE
     // @DisplayName: GPS type
     // @Description: GPS type
-    // @Values: 0:None,1:AUTO,2:uBlox,3:MTK,4:MTK19,5:NMEA,6:SiRF,7:HIL,8:SwiftNav,9:UAVCAN,10:SBF,11:GSOF,13:ERB,14:MAV,15:NOVA
+    // @Values: 0:None,1:AUTO,2:uBlox,3:MTK,4:MTK19,5:NMEA,6:SiRF,7:HIL,8:SwiftNav,9:UAVCAN,10:SBF,11:GSOF,13:ERB,14:MAV,15:NOVA,16:RST_RTK
     // @RebootRequired: True
     // @User: Advanced
     AP_GROUPINFO("TYPE",    0, AP_GPS, _type[0], HAL_GPS_TYPE_DEFAULT),
@@ -532,6 +533,10 @@ void AP_GPS::detect_instance(uint8_t instance)
         } else if (_type[instance] == GPS_TYPE_NMEA &&
                    AP_GPS_NMEA::_detect(dstate->nmea_detect_state, data)) {
             new_gps = new AP_GPS_NMEA(*this, state[instance], _port[instance]);
+        }
+        else if (_type[instance] == GPS_TYPE_RST_RTK &&
+            AP_GPS_RST_RTK::_detect(dstate->rst_rtk_detect_state, data)) {
+            new_gps = new AP_GPS_RST_RTK(*this, state[instance], _port[instance]);    
         }
     }
 

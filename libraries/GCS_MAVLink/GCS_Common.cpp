@@ -1372,8 +1372,12 @@ void GCS::service_statustext(void)
 void GCS::send_message(enum ap_message id)
 {
     for (uint8_t i=0; i<num_gcs(); i++) {
-        if (chan(i).initialised) {
-            chan(i).send_message(id);
+
+        if(i != 2)
+        {
+            if (chan(i).initialised) {
+                chan(i).send_message(id);
+            }
         }
     }
 }
@@ -2009,11 +2013,15 @@ void GCS_MAVLINK::handle_timesync(mavlink_message_t *msg)
 void GCS_MAVLINK::send_timesync()
 {
     _timesync_request.sent_ts1 = timesync_timestamp_ns();
-    mavlink_msg_timesync_send(
-        chan,
-        0,
-        _timesync_request.sent_ts1
-        );
+
+    if(chan!=2)
+    {
+        mavlink_msg_timesync_send(
+            chan,
+            0,
+            _timesync_request.sent_ts1
+            );
+    }
 }
 
 void GCS_MAVLINK::handle_statustext(mavlink_message_t *msg)
